@@ -50,6 +50,8 @@ html,body{height:100%;background:var(--canvas-2);font-family:var(--f-display);co
 .top{flex:none;display:flex;align-items:center;height:20px}
 .eyebrow{font-family:var(--f-mono);font-size:12.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--grey);display:flex;align-items:center;gap:12px;white-space:nowrap}
 .body{flex:1;min-height:0;display:flex;flex-direction:column;padding-top:52px}
+.body>*{flex-shrink:0}
+.vchip,.tier,.mo{flex-shrink:0}
 .body.low{padding-top:96px}
 .foot{position:absolute;left:var(--mx);right:var(--mx);bottom:32px;height:20px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
 .brand{font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:10px}
@@ -65,6 +67,11 @@ p{font-size:20px;line-height:1.5;color:var(--grey)}
 h1,h2,h3,p,li{text-wrap:pretty}
 .lead{font-size:24px;line-height:1.45;font-weight:400;color:var(--grey);max-width:860px;margin-top:32px;letter-spacing:-.01em}
 .statement{font-size:44px;line-height:1.24;font-weight:300;letter-spacing:-.022em;word-spacing:.05em;color:var(--ink);max-width:1080px}
+.who{padding-top:72px}
+.who .statement{font-size:42px;line-height:1.26;max-width:1104px;letter-spacing:-.02em;text-wrap:pretty}
+.who .vcard.who-card{margin-top:72px;padding:46px 52px 44px;justify-content:flex-start;gap:0}
+.who .who-card .v{font-size:76px;line-height:1.04;letter-spacing:-.036em}
+.who .who-card .vc{font-size:12.5px;letter-spacing:.16em;margin-top:18px;opacity:1;text-align:left;max-width:none;color:#F3F8F6}
 .mono{font-family:var(--f-mono);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
 .grad-text{background:var(--g-text);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:400}
 .note{font-size:16px;line-height:1.5;color:var(--grey);margin-top:22px}
@@ -72,8 +79,8 @@ h1,h2,h3,p,li{text-wrap:pretty}
 .note .u{color:var(--ink);font-weight:500}
 
 /* ---------- gradient feature card ---------- */
-.gcard{position:relative;border-radius:var(--r);overflow:hidden;color:#fff;isolation:isolate}
-.gcard::after{content:"";position:absolute;inset:0;background-image:var(--grain);background-size:220px 220px;mix-blend-mode:soft-light;opacity:.7;pointer-events:none;z-index:0}
+.gcard{position:relative;border-radius:var(--r);overflow:visible;flex:none;min-height:auto;color:#fff;isolation:isolate}
+.gcard::after{content:"";position:absolute;inset:0;border-radius:inherit;background-image:var(--grain);background-size:220px 220px;mix-blend-mode:soft-light;opacity:.7;pointer-events:none;z-index:0}
 .gcard>*{position:relative;z-index:1}
 .g-olive{background:var(--g-olive)} .g-forest{background:var(--g-forest)} .g-sand{background:var(--g-sand);color:var(--ink)} .g-pale{background:var(--g-pale);color:var(--ink)}
 /* value card: a real figure or key phrase from the slide, plus a small mono caption */
@@ -293,9 +300,9 @@ aside.notes{display:none}
 <!-- 3 WHO -->
 <section class="slide" data-title="Who we are">
   <header class="top"><span class="eyebrow">Who we are</span></header>
-  <div class="body low">
-    <p class="statement">We ask your staff where their week actually goes, put a dollar figure on every repeat task, then build the digital support and automations that <span class="grad-text">win those hours back.</span></p>
-    <div class="gcard g-forest vcard row" style="margin-top:52px;padding:30px 36px 28px"><span class="v">15 - 150 staff</span><span class="vc">Roughly, small and medium businesses</span></div>
+  <div class="body who">
+    <p class="statement">We ask your staff where their week actually goes, put a&nbsp;dollar figure on every repeat task, then build the digital support and automations that <span class="grad-text">win those hours back.</span></p>
+    <div class="gcard g-forest vcard who-card"><span class="v">15 - 150 staff</span><span class="vc">Roughly, small and medium businesses</span></div>
   </div>
   <aside class="notes">
     <p>We're based in Melbourne. We work with small and medium businesses, roughly 15 - 150 staff.</p>
@@ -598,7 +605,7 @@ aside.notes{display:none}
     e.addEventListener('mouseenter',function(){setF(e.closest('.slide'),+e.dataset.fi)});
   });
 
-  function fit(){var s=Math.min(window.innerWidth/1280, window.innerHeight/720);stage.style.transform='scale('+s+')'}
+  function fit(){var v=document.getElementById('viewport'),w=v.clientWidth||window.innerWidth,h=v.clientHeight||window.innerHeight;var s=Math.min(w/1280,h/720);stage.style.transform='scale('+s+')'}
   function notesFor(k){var a=slides[k].querySelector('aside.notes');return a?a.innerHTML:''}
   function show(n,f){
     i=Math.max(0,Math.min(N-1,n));
@@ -626,7 +633,9 @@ aside.notes{display:none}
   });
   document.getElementById('viewport').addEventListener('click',function(e){if(e.clientX<window.innerWidth*0.3)prev();else next()});
   window.addEventListener('beforeprint',resetFocus);
-  window.addEventListener('resize',fit);
+  window.addEventListener('resize',fit);window.addEventListener('orientationchange',fit);window.addEventListener('load',fit);
+  if(window.visualViewport)window.visualViewport.addEventListener('resize',fit);
+  if(window.ResizeObserver)new ResizeObserver(fit).observe(document.getElementById('viewport'));
   fit();
   var h=parseInt((location.hash||'').slice(1),10);
   show(isNaN(h)?0:h-1);
