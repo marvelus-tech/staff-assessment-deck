@@ -18,9 +18,10 @@ html,body{height:100%;background:#eef0f4;font-family:Inter,"Inter Tight",system-
 .slide{position:absolute;inset:0;padding:56px 84px 64px;display:none;flex-direction:column;background:var(--bg)}
 .slide.active{display:flex}
 .slide::before{content:"";position:absolute;left:0;top:0;height:5px;width:100%;background:var(--grad);opacity:.9}
-.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex:none}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex:none;position:relative;z-index:2}
 .eyebrow{font-size:16px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.body{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.body{flex:1;display:flex;flex-direction:column;justify-content:flex-start;min-height:0}
+.body::before,.body::after{content:"";flex:1 1 0;min-height:0}
 h1{font-size:88px;line-height:1.02;font-weight:800;letter-spacing:-.035em}
 h2{font-size:56px;line-height:1.08;font-weight:780;letter-spacing:-.03em;max-width:1080px}
 h3{font-size:28px;line-height:1.2;font-weight:720;letter-spacing:-.015em}
@@ -29,7 +30,6 @@ p{font-size:24px;line-height:1.45;color:var(--ink2)}
 .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .muted{color:var(--muted)}
 .pill{display:inline-block;font-size:18px;font-weight:600;padding:8px 18px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);color:var(--ink2)}
-.pills{display:flex;gap:14px;flex-wrap:wrap;margin-top:40px}
 .foot{display:flex;justify-content:space-between;align-items:flex-end;font-size:20px;color:var(--muted);flex:none}
 .url{font-weight:800;color:var(--ink);font-size:24px}
 
@@ -52,13 +52,6 @@ p{font-size:24px;line-height:1.45;color:var(--ink2)}
 .card.dark h3,.card.dark .k{color:#fff}
 .card.dark p{color:#e2e8f0}
 
-/* checklist */
-.checks{list-style:none;margin-top:36px}
-.checks li{position:relative;padding:16px 0 16px 48px;border-top:1px solid var(--line);font-size:32px;line-height:1.25;font-weight:600;color:var(--ink)}
-.checks li:first-child{border-top:0}
-.checks li::before{content:"";position:absolute;left:4px;top:26px;width:22px;height:22px;border-radius:50%;background:var(--grad)}
-.checks.sm li{font-size:27px;padding:13px 0 13px 46px}
-.checks.sm li::before{top:21px}
 
 /* formula */
 .formula{margin-top:44px;display:flex;align-items:center;flex-wrap:nowrap;gap:12px;font-size:27px;font-weight:650;white-space:nowrap}
@@ -86,6 +79,10 @@ p{font-size:24px;line-height:1.45;color:var(--ink2)}
 .mo li{font-size:21px;line-height:1.35;color:var(--ink2);padding:9px 0 9px 24px;position:relative;border-top:1px solid var(--line)}
 .mo li::before{content:"";position:absolute;left:0;top:21px;width:12px;height:3px;border-radius:2px;background:var(--ink)}
 
+.dash{list-style:none;margin-top:36px}
+.dash li{font-size:21px;line-height:1.35;color:var(--ink2);padding:9px 0 9px 24px;position:relative;border-top:1px solid var(--line)}
+.dash li::before{content:"";position:absolute;left:0;top:21px;width:12px;height:3px;border-radius:2px;background:var(--ink)}
+
 /* six grid */
 .six{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px}
 .six .card{padding:24px 26px}
@@ -96,8 +93,6 @@ p{font-size:24px;line-height:1.45;color:var(--ink2)}
 .price-hero{margin-top:36px;display:flex;align-items:flex-end;gap:28px;flex-wrap:wrap}
 .price-hero .amt{font-size:104px;font-weight:800;letter-spacing:-.04em;line-height:1}
 .price-hero .by{font-size:32px;font-weight:650;color:var(--muted);padding-bottom:14px}
-.credit{margin-top:40px;display:inline-flex;align-items:center;gap:16px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:20px 26px;font-size:26px;font-weight:600;color:var(--ink);align-self:flex-start}
-.credit .dot{width:16px;height:16px;border-radius:50%;background:var(--grad);flex:none}
 
 .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px}
 .tier{border:1px solid var(--line);border-radius:20px;padding:26px 26px 22px;background:#fff;display:flex;flex-direction:column}
@@ -113,16 +108,13 @@ p{font-size:24px;line-height:1.45;color:var(--ink2)}
 
 .terms{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:36px}
 .terms .card h3{margin-bottom:6px}
-.terms .card .checks{margin-top:4px}
-.terms .card .checks li{font-size:25px;padding:12px 0 12px 42px}
-.terms .card .checks li::before{top:20px;width:18px;height:18px}
-.terms .no li::before{background:#cbd5e1}
+.terms .card .dash{margin-top:4px}
 
 /* value timeline */
 .vline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:52px;position:relative}
 .vline::before{content:"";position:absolute;left:12px;right:12px;top:15px;height:4px;border-radius:2px;background:var(--grad)}
 .vp{position:relative;padding-top:52px}
-.vp::before{content:"";position:absolute;left:0;top:2px;width:30px;height:30px;border-radius:50%;background:#fff;border:5px solid var(--ink)}
+.vp::before{content:"";position:absolute;left:3px;top:8px;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid #cbd5e1}
 .vp h3{font-size:34px}
 .vp p{font-size:21px;margin-top:6px}
 .cad{display:flex;gap:20px;margin-top:46px}
@@ -131,9 +123,6 @@ p{font-size:24px;line-height:1.45;color:var(--ink2)}
 .disclaimer{margin-top:auto;padding-top:20px;font-size:22px;line-height:1.4;color:var(--ink2);border-top:1px solid var(--line);flex:none}
 .disclaimer b{color:var(--ink)}
 
-.cta-box{margin-top:44px;display:inline-flex;flex-direction:column;border:2px solid var(--ink);border-radius:20px;padding:26px 34px;align-self:flex-start}
-.cta-box .l{font-size:16px;color:var(--muted);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
-.cta-box .u{font-size:44px;font-weight:800;margin-top:6px;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
 
 /* notes data hidden */
 aside.notes{display:none}
@@ -170,7 +159,7 @@ aside.notes{display:none}
     <h1>Ask the people<br><span class="grad-text">doing the work.</span></h1>
     <p class="lead">How we find where your team's time is lost, and win it back.</p>
   </div>
-  <div class="foot"><span>MarvelUs, Melbourne</span><span class="url">marvelus.cc</span></div>
+  <div class="foot"><span>MarvelUs</span></div>
   <aside class="notes">
     <p>Thanks for making the time. I'll keep this short and you can stop me any time.</p>
     <p>Over the next few minutes: who we are, how we work, what the monthly support covers, what it costs, and the one next step.</p>
@@ -195,7 +184,6 @@ aside.notes{display:none}
   <div class="top"><span class="eyebrow">Who we are</span></div>
   <div class="body">
     <p class="statement">We ask your staff where their week actually goes, put a dollar figure on every repeat task, then build the digital support and automations that <span class="grad-text">win those hours back.</span></p>
-    <div class="pills"><span class="pill">Based in Melbourne</span><span class="pill">For teams of 15 to 150</span></div>
   </div>
   <aside class="notes">
     <p>We're based in Melbourne. We work with small and medium businesses, roughly 15 to 150 staff.</p>
@@ -241,7 +229,7 @@ aside.notes{display:none}
   <div class="top"><span class="eyebrow">Part 1: the questionnaire</span></div>
   <div class="body">
     <h2>Tasks, not jobs.</h2>
-    <ul class="checks">
+    <ul class="dash">
       <li>Nobody is being assessed</li>
       <li>No names in the report</li>
       <li>About 20 minutes per person</li>
@@ -338,7 +326,7 @@ aside.notes{display:none}
   <div class="body">
     <h2>Start with the assessment.</h2>
     <div class="price-hero"><span class="amt">A$1,500 to 6,000</span><span class="by">by headcount</span></div>
-    <div class="credit"><span class="dot"></span>Credited against month 1 of the retainer</div>
+    <p class="small">Credited against month 1 of the retainer</p>
   </div>
   <aside class="notes">
     <p>The assessment is priced by headcount, from A$1,500 to A$6,000, AUD ex GST. Bigger teams mean more interviews.</p>
@@ -376,8 +364,8 @@ aside.notes{display:none}
   <div class="body">
     <h2>What's not included.</h2>
     <div class="terms">
-      <div class="card no"><ul class="checks"><li>Software licences</li><li>API and usage costs</li><li>Large custom builds</li></ul></div>
-      <div class="card no"><ul class="checks"><li>Legal advice</li><li>Cyber security advice</li></ul></div>
+      <div class="card no"><ul class="dash"><li>Software licences</li><li>API and usage costs</li><li>Large custom builds</li></ul></div>
+      <div class="card no"><ul class="dash"><li>Legal advice</li><li>Cyber security advice</li></ul></div>
     </div>
   </div>
   <aside class="notes">
@@ -411,7 +399,7 @@ aside.notes{display:none}
 <section class="slide" data-title="Privacy and AI governance, included">
   <div class="top"><span class="eyebrow">Included in the retainer</span></div>
   <h2 style="margin-top:auto">Privacy and AI governance, included.</h2>
-  <ul class="checks sm">
+  <ul class="dash">
     <li>AI use policy and approved tools</li>
     <li>A register of the AI you use</li>
     <li>Access, data and privacy policy checks</li>
@@ -429,7 +417,7 @@ aside.notes{display:none}
   <div class="top"><span class="eyebrow">Next step</span></div>
   <div class="body">
     <h1>Book your <span class="grad-text">10-minute chat.</span></h1>
-    <div class="cta-box"><span class="l">Book at</span><span class="u">marvelus.cc</span></div>
+    <p class="small">Book at marvelus.cc</p>
   </div>
   <aside class="notes">
     <p>One ask: book the 10-minute chat, or if we've just had it, book the assessment.</p>
