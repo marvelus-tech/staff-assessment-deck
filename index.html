@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 /* ===== BRAND CONFIG: change the brand in this one place ===== */
-const BRAND_NAME = "MarvelUs";      /* wordmark in every footer, document title */
-const BRAND_URL  = "marvelus.cc";   /* "Book at ..." line on the last slide */
+const BRAND_NAME = "Frontline AI Partners"; /* wordmark in every footer, document title */
+const BRAND_URL  = "";              /* "Book at ..." line on the last slide; empty hides the line until a URL is supplied */
 const FOCUS_STEPS = true;           /* true: Next steps through the active line on list slides before moving on */
 </script>
 <title>Staff-level AI and automation assessment</title>
@@ -581,7 +581,7 @@ aside.notes{display:none}
 
   /* brand */
   document.title='How '+BRAND_NAME+' works | Staff-level AI and automation assessment';
-  document.querySelectorAll('[data-brand-url]').forEach(function(e){e.textContent=BRAND_URL});
+  document.querySelectorAll('[data-brand-url]').forEach(function(e){if(BRAND_URL){e.textContent=BRAND_URL}else{var p=e.closest('p');if(p)p.parentNode.removeChild(p)}});
 
   /* quiet footer on every slide: brand left, counter centre */
   slides.forEach(function(s,k){
